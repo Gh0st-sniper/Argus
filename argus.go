@@ -10,6 +10,8 @@ import (
 	"log"
 
 	"net/http"
+
+	"time"
 )
 
 func main() {
@@ -48,23 +50,20 @@ func enumerate(filename, domain string) {
 
 		text := scanner.Text()
 
-		//fmt.Println(text)
-
 		full_domain := protocol + text + "." + domain
-
-		//fmt.Println(full_domain)
 
 		resp, err := http.Get(full_domain)
 
 		if err != nil {
 
-			log.Fatal(err)
+			fmt.Printf("Missed subdomain :: %s\n", full_domain)
 
 		} else {
 
 			if resp.StatusCode == 200 {
 
 				fmt.Printf("Found subdomain :: %s\n", full_domain)
+				time.Sleep(5 * time.Second)
 
 			}
 
